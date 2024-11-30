@@ -84,7 +84,7 @@
         <config key="styles"/>
     </config>
     <entry key="customDescription" type="xstring" isnull="true" value=""/>
-    <entry key="state" type="xstring" value="EXECUTED"/>
+    <entry key="state" type="xstring" value="IDLE"/>
     <entry key="factory" type="xstring" value="org.knime.time.node.convert.stringtodatetime.StringToDateTimeNodeFactory"/>
     <entry key="node-name" type="xstring" value="String to Date&amp;Time"/>
     <entry key="node-bundle-name" type="xstring" value="KNIME Date and Time Handling"/>
@@ -97,19 +97,16 @@
     <entry key="node-feature-version" type="xstring" value="5.3.3.v202410301420"/>
     <config key="factory_settings"/>
     <entry key="name" type="xstring" value="String to Date&amp;Time"/>
-    <entry key="hasContent" type="xboolean" value="true"/>
+    <entry key="hasContent" type="xboolean" value="false"/>
     <entry key="isInactive" type="xboolean" value="false"/>
     <config key="ports">
         <config key="port_1">
             <entry key="index" type="xint" value="1"/>
-            <entry key="port_spec_class" type="xstring" value="org.knime.core.data.DataTableSpec"/>
-            <entry key="port_object_class" type="xstring" value="org.knime.core.node.BufferedDataTable"/>
-            <entry key="port_object_summary" type="xstring" value="Rows: 82741, Cols: 20"/>
-            <entry key="port_dir_location" type="xstring" value="port_1"/>
+            <entry key="port_dir_location" type="xstring" isnull="true" value=""/>
         </config>
     </config>
     <config key="filestores">
         <entry key="file_store_location" type="xstring" isnull="true" value=""/>
-        <entry key="file_store_id" type="xstring" value="95019ea8-59e0-4f84-8511-a7a687f90378"/>
+        <entry key="file_store_id" type="xstring" isnull="true" value=""/>
     </config>
 </config>
