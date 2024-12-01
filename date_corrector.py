@@ -347,7 +347,7 @@ def print_date_flags(data, tag=''):
     print("Delivery before Unload : ",deliv_lessthan_unload)
     print("Delivery before Load : ",deliv_lessthan_load,'\n')
 
-def run_date_corrector():
+def run_date_corrector(write:bool = False, targetFilePath:str = '.\Dataset\Dataset_1.json'):
     with open(filePath, 'r') as file:
         data = json.load(file)
         get_max_min_dates(data)
@@ -365,7 +365,10 @@ def run_date_corrector():
         data = fix_unload_before_load(data)
         data = fix_deliv_before_unload(data)
         print_date_flags(data,"After completed corrections : ")
-        with open(targetFilePath, "w") as json_file:
-            json.dump(data, json_file, indent=4)
+        if write==True:
+            with open(targetFilePath, "w") as json_file:
+                json.dump(data, json_file, indent=4)
+        else:
+            return data
 
-run_date_corrector()
+run_date_corrector(True)

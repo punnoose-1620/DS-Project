@@ -70,8 +70,8 @@
                 "nrfails": 0,
                 "exectime": 448,
                 "nrcreated": 0,
-                "successor": "n/a",
-                "successornodename": "n/a"
+                "successor": "org.knime.base.node.preproc.joiner3.Joiner3NodeFactory",
+                "successornodename": "Joiner"
             },
             {
                 "id": "org.knime.base.node.preproc.pmml.missingval.compute.MissingValueHandlerNodeFactory",
@@ -86,12 +86,12 @@
             {
                 "id": "org.knime.base.node.rules.engine.RuleEngineNodeFactory",
                 "nodename": "Rule Engine",
-                "nrexecs": 2,
+                "nrexecs": 5,
                 "nrfails": 0,
-                "exectime": 354,
-                "nrcreated": 0,
-                "successor": "n/a",
-                "successornodename": "n/a"
+                "exectime": 802,
+                "nrcreated": 1,
+                "successor": "org.knime.base.node.preproc.joiner3.Joiner3NodeFactory",
+                "successornodename": "Joiner"
             },
             {
                 "id": "org.knime.base.node.preproc.colconvert.categorytonumber2.CategoryToNumberNodeFactory2",
@@ -296,12 +296,22 @@
             {
                 "id": "org.knime.base.node.preproc.groupby.GroupByNodeFactory",
                 "nodename": "GroupBy",
-                "nrexecs": 0,
+                "nrexecs": 3,
                 "nrfails": 0,
-                "exectime": 0,
+                "exectime": 3450,
                 "nrcreated": 1,
-                "successor": "n/a",
-                "successornodename": "n/a"
+                "successor": "org.knime.base.node.preproc.joiner3.Joiner3NodeFactory",
+                "successornodename": "Joiner"
+            },
+            {
+                "id": "org.knime.base.node.preproc.joiner3.Joiner3NodeFactory",
+                "nodename": "Joiner",
+                "nrexecs": 2,
+                "nrfails": 0,
+                "exectime": 921,
+                "nrcreated": 1,
+                "successor": "org.knime.base.node.rules.engine.RuleEngineNodeFactory",
+                "successornodename": "Rule Engine"
             }
         ],
         "metaNodes": {
@@ -309,21 +319,21 @@
         "wrappedNodes": {
         },
         "createdVia": {
-            "WEB_UI": 15
+            "WEB_UI": 17
         }
     },
-    "uptime": 21428636,
+    "uptime": 22990059,
     "workflowsOpened": 3,
     "remoteWorkflowsOpened": 0,
     "columnarStorageWorkflowsOpened": 0,
     "workflowsImported": 1,
-    "workflowsExported": 0,
+    "workflowsExported": 1,
     "webUIPerspectiveSwitches": 0,
     "javaUIPerspectiveSwitches": 0,
     "lastUsedPerspective": "none",
     "launches": 4,
     "lastApplicationID": "org.knime.product.KNIME_APPLICATION",
-    "timeSinceLastStart": 103956,
+    "timeSinceLastStart": 6349648,
     "crashes": 0,
-    "properlyShutDown": false
+    "properlyShutDown": true
 }

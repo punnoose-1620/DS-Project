@@ -6,10 +6,16 @@ distance_values = {}
 
 from_country_key = 'FromISO'
 to_country_key = 'ToISO'
+mode_of_transport_key = 'MeansOfTransport'
 distance_key = 'Distance'
 
 data_file = '.\Dataset\Dataset_1.json'
-target_data_file = '.\Dataset\Dataset_2.json'
+
+def get_distance_value_key(from_country:str, to_country:str, mode_of_transport:str, include_MoT:bool=False):
+    key = from_country+'_'+to_country
+    if include_MoT==True:
+        key = key+'_'+mode_of_transport
+    return key
 
 def categorise_entries(data):
     # print('\n')
@@ -26,16 +32,17 @@ def categorise_entries(data):
     print(len(countries_logged),' countries have been logged')
     print(len(categories),' shipping combinations found')
 
-def get_distance_values(data):
+def get_distance_values(data, include_MoT:bool = False):
     # print('\n')
     for entry in tqdm(data, desc="Getting Distance Sum and Count for mean"):
         ref_keys = distance_values.keys()
         from_country = str(entry[from_country_key]).strip()
         to_country = str(entry[to_country_key]).strip()
         distance_as_string = str(entry[distance_key]).strip().lower()
+        mode_of_transport = str(entry[mode_of_transport_key]).strip().lower()
         if len(distance_as_string)!=0 and distance_as_string!='null' and distance_as_string!='none':
             distance = float(distance_as_string)
-            item_key = from_country+'_'+to_country
+            item_key = get_distance_value_key(from_country,to_country,mode_of_transport, include_MoT)
             value = {
                     'sum': distance,
                     'count': 1
@@ -61,15 +68,16 @@ def print_means():
         endpoints = key.split('_')
         print(endpoints[0],' to ',endpoints[1],' : ',json.dumps(distance_values[key], indent=4))
 
-def replace_empty_values(data):
+def replace_empty_values(data, include_MoT:bool = False):
     # print('\n')
     replace_count = 0
     for entry in tqdm(data, desc='Replacing Empty/null values for distance'):
         distance_as_string = str(entry[distance_key]).strip().lower()
         from_country = str(entry[from_country_key])
         to_country = str(entry[to_country_key])
+        mode_of_transport = str(entry[mode_of_transport_key]).strip().lower()
         if len(distance_as_string)==0 or distance_as_string=='null' or distance_as_string=='none':
-            ref_key = from_country+'_'+to_country
+            ref_key = get_distance_value_key(from_country,to_country,mode_of_transport, include_MoT)
             if ref_key in distance_values.keys():
                 values = distance_values[ref_key]
                 distance_as_string = values['mean']
@@ -110,19 +118,22 @@ def drop_final_empty_distance_entries(data):
     print('Drop Count : ',str(len(data)-len(new_data)))
     return new_data
 
-def run_distance_corrector():
+def run_distance_corrector(write:bool = False, target_data_file:str = '.\Dataset\Dataset_2.json', include_MoT:bool = False):
     with open(data_file, 'r') as file:
         data = json.load(file)
         print_non_numeric_distances(data)
         categorise_entries(data)
-        get_distance_values(data)
+        get_distance_values(data, include_MoT)
         get_means()
         # print_means()
-        data = replace_empty_values(data)
+        data = replace_empty_values(data, include_MoT)
         print_non_numeric_distances(data)
         data = drop_final_empty_distance_entries(data)
         print_non_numeric_distances(data)
-        with open(target_data_file, "w") as json_file:
-            json.dump(data, json_file, indent=4)
+        if write==True:
+            with open(target_data_file, "w") as json_file:
+                json.dump(data, json_file, indent=4)
+        else:
+            return data
 
-run_distance_corrector()
+run_distance_corrector(False, '', True)
