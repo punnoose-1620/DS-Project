@@ -1,6 +1,9 @@
 # To run this file, use this on terminal : 
 # python data_corrector.py
 
+# To log the output onto a text file, use the below prompt : 
+# python data_corrector.py > DataProcessorOutputLog.txt
+
 import json
 from tqdm import tqdm
 from distance_corrector import *
@@ -58,7 +61,9 @@ def get_raw_data():
 
 def write_processed_data(data):
     with open(target_file_path, 'w+') as target_file:
-        json.dumps(data, target_file, indent=4)
+        json.dump(data, target_file, indent=4)
+    target_file.close()
+    print("Processed Data written to file ",target_file_path)
 
 data = get_raw_data()
 check_invalid_entries(data)
@@ -70,4 +75,4 @@ distance_corrected = run_distance_corrector(date_corrected)
 check_invalid_entries(data)
 check_invalid_key_combinations(data)
 # Use this line to write processed data to a new Dataset_processed.json file
-# write_processed_data(distance_corrected)
+write_processed_data(distance_corrected)
