@@ -3,6 +3,9 @@
 ## Project Overview
 
 This project analyzes historical logistics data provided by TKL Logistics to predict key metrics like CO₂ emissions, transport duration, delivery duration, and total transport cost. The workflow involves data correction, preprocessing, model training, and evaluation to determine the best predictive models for each target.
+
+![Project Display Image](./display-image.webp)
+
 Workflow Summary
 
 1. Data Correction
@@ -10,6 +13,11 @@ Workflow Summary
     Used `data_corrector.py` (Python script) to:
         Ensure _DeliveryDate > UnloadingDate > LoadingDate_.
         Correct year discrepancies (e.g., 2204 → 2024).
+
+    Used `distance_corrector.py` (Python script) to:
+        Get distances categorised by *FromISO*, *ToISO* and *MeansOfTransport*(optional)
+        Get mean distance of each category
+        Corrected empty distances using the means from each category
 
 2. Loading and Conversion
 
