@@ -3,8 +3,6 @@ from tqdm import tqdm
 from collections import Counter
 from datetime import datetime, timedelta, date
 
-filePath = ".\Dataset\Dataset.json"
-targetFilePath = ".\Dataset\Dataset_1.json"
 max_date = datetime(1900,1,1)
 min_date = datetime.now()
 today = datetime.now()
@@ -347,28 +345,26 @@ def print_date_flags(data, tag=''):
     print("Delivery before Unload : ",deliv_lessthan_unload)
     print("Delivery before Load : ",deliv_lessthan_load,'\n')
 
-def run_date_corrector(write:bool = False, targetFilePath:str = '.\Dataset\Dataset_1.json'):
-    with open(filePath, 'r') as file:
-        data = json.load(file)
-        get_max_min_dates(data)
-        print_years(data,"(Before Processing)")
-        data = correct_year(data)
-        print_years(data,"(After First typo correction)")
-        data = correct_year_typing_typos(data)
-        print_years(data,"(After Second correction)")
-        data = correct_year_anomalies(data)
-        print_years(data,"(After anomaly clearance)")
-        print_year_combos(data,"(Before combination processing)")
-        data = correct_unload_load_switch(data)
-        print_year_combos(data,"(After clearing loading-unloading date switch)")
-        data = replace_loading_unloading_outlier(data)
-        data = fix_unload_before_load(data)
-        data = fix_deliv_before_unload(data)
-        print_date_flags(data,"After completed corrections : ")
-        if write==True:
-            with open(targetFilePath, "w") as json_file:
-                json.dump(data, json_file, indent=4)
-        else:
-            return data
+def run_date_corrector(data, write:bool = False, targetFilePath:str = '.\Dataset\Dataset_1.json'):
+    get_max_min_dates(data)
+    print_years(data,"(Before Processing)")
+    data = correct_year(data)
+    print_years(data,"(After First typo correction)")
+    data = correct_year_typing_typos(data)
+    print_years(data,"(After Second correction)")
+    data = correct_year_anomalies(data)
+    print_years(data,"(After anomaly clearance)")
+    print_year_combos(data,"(Before combination processing)")
+    data = correct_unload_load_switch(data)
+    print_year_combos(data,"(After clearing loading-unloading date switch)")
+    data = replace_loading_unloading_outlier(data)
+    data = fix_unload_before_load(data)
+    data = fix_deliv_before_unload(data)
+    print_date_flags(data,"After completed corrections : ")
+    if write==True:
+        with open(targetFilePath, "w") as json_file:
+            json.dump(data, json_file, indent=4)
+    else:
+        return data
 
-run_date_corrector(True)
+# run_date_corrector(True)

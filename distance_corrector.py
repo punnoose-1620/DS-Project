@@ -9,8 +9,6 @@ to_country_key = 'ToISO'
 mode_of_transport_key = 'MeansOfTransport'
 distance_key = 'Distance'
 
-data_file = '.\Dataset\Dataset_1.json'
-
 def get_distance_value_key(from_country:str, to_country:str, mode_of_transport:str, include_MoT:bool=False):
     key = from_country+'_'+to_country
     if include_MoT==True:
@@ -118,22 +116,18 @@ def drop_final_empty_distance_entries(data):
     print('Drop Count : ',str(len(data)-len(new_data)))
     return new_data
 
-def run_distance_corrector(write:bool = False, target_data_file:str = '.\Dataset\Dataset_2.json', include_MoT:bool = False):
-    with open(data_file, 'r') as file:
-        data = json.load(file)
-        print_non_numeric_distances(data)
-        categorise_entries(data)
-        get_distance_values(data, include_MoT)
-        get_means()
-        # print_means()
-        data = replace_empty_values(data, include_MoT)
-        print_non_numeric_distances(data)
-        data = drop_final_empty_distance_entries(data)
-        print_non_numeric_distances(data)
-        if write==True:
-            with open(target_data_file, "w") as json_file:
-                json.dump(data, json_file, indent=4)
-        else:
-            return data
-
-run_distance_corrector(False, '', True)
+def run_distance_corrector(data, write:bool = False, target_data_file:str = '.\Dataset\Dataset_2.json', include_MoT:bool = False):
+    print_non_numeric_distances(data)
+    categorise_entries(data)
+    get_distance_values(data, include_MoT)
+    get_means()
+    # print_means()
+    data = replace_empty_values(data, include_MoT)
+    print_non_numeric_distances(data)
+    data = drop_final_empty_distance_entries(data)
+    print_non_numeric_distances(data)
+    if write==True:
+        with open(target_data_file, "w") as json_file:
+            json.dump(data, json_file, indent=4)
+    else:
+        return data
