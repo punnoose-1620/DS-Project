@@ -69,7 +69,7 @@ data = get_raw_data()
 check_invalid_entries(data)
 check_invalid_key_combinations(data)
 date_corrected = run_date_corrector(data)
-distance_corrected = run_distance_corrector(date_corrected)
+distance_corrected = run_distance_corrector(date_corrected, include_MoT=True)
 # Use this to correct distance data including MeansOfTransport as a factor
 # distance_corrected = run_distance_corrector(date_corrected, include_MoT=True) 
 check_invalid_entries(data)

@@ -20,12 +20,29 @@ def print_year_combos(data, tag=''):
 
         delivery_date_as_string = str(entry['DeliveryDate'])
         delivery_date = datetime.strptime(delivery_date_as_string, "%Y-%m-%d")
-        combo = str(loading_date.year)+" :  "+str(unloading_date.year)+"  : "+str(delivery_date.year)
-        if combo not in year_combos:
+        flag = ''
+        if (delivery_date.year<unloading_date.year) or (delivery_date.year<loading_date.year) or (unloading_date.year<loading_date.year):
+            flag = ' : INVALID'
+        key = str(loading_date.year)+" :  "+str(unloading_date.year)+"  : "+str(delivery_date.year)+flag
+        value = 0
+        combo = {key: value}
+        present = False
+        for item in year_combos:
+            temp_keys = list(item.keys())
+            if key in temp_keys:
+                present = True
+                item[temp_keys[0]] = item[temp_keys[0]] +1
+        if present==False:
             year_combos.append(combo)
-    print("\nExisting combination of years ",tag,"\nLoad : Unload : Delivery")
+    print("\nExisting combination of years ",tag,"\nLoad : Unload : Delivery : Validity(count)")
+    invalid_count = 0
     for item in year_combos:
-        print(item)
+        keys = list(item.keys())[0]
+        value = str(item[keys])
+        if 'INVALID' in keys:
+            invalid_count = invalid_count+int(value)
+        print(keys,'(',value,')')
+    print("Total Invalid Count : ",invalid_count)
 
 def print_years(data, tag=''):
     loading_years = []
@@ -119,6 +136,24 @@ def correct_unload_load_switch(data):
         entry['UnloadingDate'] = str(date(unloading_date.year, unloading_date.month, unloading_date.day))
     if flag==False: 
         print("No Changes made while switching loading and unloading dates....")
+    return data
+
+def correct_unload_delivery_switch(data):
+    flag = False
+    for entry in tqdm(data, desc="Correcting switched unloading and delivery dates"):
+        loading_date_as_string = str(entry['LoadingDate']).split('T')[0]
+        loading_date = datetime.strptime(loading_date_as_string, "%Y-%m-%d")
+        
+        unloading_date_as_string = str(entry['UnloadingDate']).split('T')[0]
+        unloading_date = datetime.strptime(unloading_date_as_string, "%Y-%m-%d")
+
+        delivery_date_as_string = str(entry['DeliveryDate'])
+        delivery_date = datetime.strptime(delivery_date_as_string, "%Y-%m-%d")
+
+        if delivery_date.year<unloading_date.year:
+            if loading_date.year==delivery_date.year:
+                entry['UnloadingDate'] = str(date(delivery_date.year, unloading_date.month, unloading_date.day))
+                entry['DeliveryDate'] = str(date(unloading_date.year, delivery_date.month, delivery_date.day))
     return data
 
 def correct_year_typing_typos(data):
@@ -345,7 +380,11 @@ def print_date_flags(data, tag=''):
     print("Delivery before Unload : ",deliv_lessthan_unload)
     print("Delivery before Load : ",deliv_lessthan_load,'\n')
 
+# def drop_invalid_dates_after_correction(data):
+#     print()
+
 def run_date_corrector(data, write:bool = False, targetFilePath:str = '.\Dataset\Dataset_1.json'):
+    print("Begin Date Corrections")
     get_max_min_dates(data)
     print_years(data,"(Before Processing)")
     data = correct_year(data)
@@ -357,6 +396,8 @@ def run_date_corrector(data, write:bool = False, targetFilePath:str = '.\Dataset
     print_year_combos(data,"(Before combination processing)")
     data = correct_unload_load_switch(data)
     print_year_combos(data,"(After clearing loading-unloading date switch)")
+    data = correct_unload_delivery_switch(data)
+    print_year_combos(data,"(After clearing unloading-delivery date switch)")
     data = replace_loading_unloading_outlier(data)
     data = fix_unload_before_load(data)
     data = fix_deliv_before_unload(data)

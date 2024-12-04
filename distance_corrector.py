@@ -117,6 +117,7 @@ def drop_final_empty_distance_entries(data):
     return new_data
 
 def run_distance_corrector(data, write:bool = False, target_data_file:str = '.\Dataset\Dataset_2.json', include_MoT:bool = False):
+    print("Begin Distance Corrections")
     print_non_numeric_distances(data)
     categorise_entries(data)
     get_distance_values(data, include_MoT)
