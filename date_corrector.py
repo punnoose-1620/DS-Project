@@ -380,8 +380,23 @@ def print_date_flags(data, tag=''):
     print("Delivery before Unload : ",deliv_lessthan_unload)
     print("Delivery before Load : ",deliv_lessthan_load,'\n')
 
-# def drop_invalid_dates_after_correction(data):
-#     print()
+def drop_invalid_dates_after_correction(data):
+    new_data = []
+    for entry in tqdm(data, desc="Dropping Uncorrectible Date Entries"):
+        loading_date_as_string = str(entry['LoadingDate']).split('T')[0]
+        loading_date = datetime.strptime(loading_date_as_string, "%Y-%m-%d")
+        
+        unloading_date_as_string = str(entry['UnloadingDate']).split('T')[0]
+        unloading_date = datetime.strptime(unloading_date_as_string, "%Y-%m-%d")
+
+        delivery_date_as_string = str(entry['DeliveryDate'])
+        delivery_date = datetime.strptime(delivery_date_as_string, "%Y-%m-%d")
+
+        if (unloading_date>loading_date) and (delivery_date>unloading_date):
+            new_data.append(entry)
+    dropped_count = (len(data)-len(new_data))
+    print(dropped_count," entries have been dropped from data due to date issues\n")
+    return new_data
 
 def run_date_corrector(data, write:bool = False, targetFilePath:str = '.\Dataset\Dataset_1.json'):
     print("Begin Date Corrections")
@@ -402,6 +417,7 @@ def run_date_corrector(data, write:bool = False, targetFilePath:str = '.\Dataset
     data = fix_unload_before_load(data)
     data = fix_deliv_before_unload(data)
     print_date_flags(data,"After completed corrections : ")
+    data = drop_invalid_dates_after_correction(data)
     if write==True:
         with open(targetFilePath, "w") as json_file:
             json.dump(data, json_file, indent=4)

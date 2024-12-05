@@ -10,7 +10,7 @@ Workflow Summary
 
 1. Data Correction
 
-    Used `data_corrector.py` (Python script) to:
+    Used `date_corrector.py` (Python script) to:
         Ensure _DeliveryDate > UnloadingDate > LoadingDate_.
         Correct year discrepancies (e.g., 2204 → 2024).
 
@@ -18,6 +18,9 @@ Workflow Summary
         Get distances categorised by *FromISO*, *ToISO* and *MeansOfTransport*(optional)
         Get mean distance of each category
         Corrected empty distances using the means from each category
+
+    Used `data_corrector.py` (Python script) to:
+        Call Necessary functions from `date_corrector.py` and `distance_corrector.py` to clean dates and distances and drop all entries that still have invlid dates and distances.
 
 2. Loading and Conversion
 

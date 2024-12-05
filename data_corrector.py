@@ -24,18 +24,25 @@ def check_invalid_entries(data):
 
 def check_invalid_key_combinations(data):
     invalid_combinations = []
-    ref_keys = list(data[0].keys())
+    # ref_keys = list(data[0].keys())
+    ref_keys = ['FromISO', 'FromZipCode', 'ToISO', 'ToZipCode', 'ForwardingAgentName', 'LoadingDate', 'UnloadingDate', 'OriginalETA', 'DeliveryDate', 'CO2', 'TotalTransportCost', 'NumberOfPieces', 'MeansOfTransport', 'Agreement', 'Distance', 'Weight', 'Agent']
     for entry in tqdm(data, desc="Checking data for combinations of invalid keys"):
-        current_combo = []
+        current_combo = ''
         for key in ref_keys:
             value = str(entry[key]).strip()
             if (value=='0' or len(value)==0 or value in ('none','null','empty')) and (key not in current_combo):
-                current_combo.append(key)
-        if len(current_combo)>0 and current_combo not in invalid_combinations:
-            invalid_combinations.append(current_combo)
-    print("Present entries with multiple entry values : ")
+                current_combo = current_combo+' : '+key
+        temp_flag = False
+        for item in invalid_combinations:
+            temp_key = list(item.keys())[0]
+            if temp_key==current_combo:
+                item[temp_key] = item[temp_key]+1
+                temp_flag = True
+        if temp_flag==False:
+            invalid_combinations.append({current_combo: 0})
+    print("Present entries with multiple invalid entry values : ")
     for item in invalid_combinations:
-        print(item)
+        print(str(item).replace('}','').replace('{',''))
 
 def drop_invalid_entries(data, key:str):
     new_data = []
@@ -65,6 +72,18 @@ def write_processed_data(data):
     target_file.close()
     print("Processed Data written to file ",target_file_path)
 
+def drop_final_invalid_data(data):
+    ref_keys = ['LoadingDate', 'UnloadingDate', 'DeliveryDate', 'Distance']
+    new_data = []
+    for entry in tqdm(data, desc="Dropping invalid data after processing"):
+        for key in ref_keys:
+            value = str(entry[key]).lower()
+            if len(value)>0 and (value not in ('none','null','empty','0','0.0')) and (entry not in new_data):   
+                new_data.append(entry)
+    dropped_count = len(new_data)-len(data)
+    print(dropped_count," entries have been dropped from data")
+    return new_data
+
 data = get_raw_data()
 check_invalid_entries(data)
 check_invalid_key_combinations(data)
@@ -74,5 +93,8 @@ distance_corrected = run_distance_corrector(date_corrected, include_MoT=True)
 # distance_corrected = run_distance_corrector(date_corrected, include_MoT=True) 
 check_invalid_entries(data)
 check_invalid_key_combinations(data)
+final_data = drop_final_invalid_data(data)
+total_drop_count = (len(data)-len(final_data))
+print('\n',total_drop_count,' entries dropped from data')
 # Use this line to write processed data to a new Dataset_processed.json file
-write_processed_data(distance_corrected)
+# write_processed_data(distance_corrected)
