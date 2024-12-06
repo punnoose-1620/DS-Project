@@ -71,17 +71,29 @@ Performed various preprocessing steps to clean and prepare data:
 
   Results for CO2 Prediction models
 ![CO2 Results](./OutputScreenshots/CO2.png)
+![CO2 Results Graph](./GeneratedGraphs/CO2Results.png)
 
   Results for Transport Duration Prediction models
 ![TransportDuration Results](./OutputScreenshots/TransportDuration.png)
+![TransportDuration Results Graph](./GeneratedGraphs/TransportDurationResults.png)
 
   Results for Delivery Duration Prediction models
 ![DeliveryDuration Results](./OutputScreenshots/DeliveryDuration.png)
+![DeliveryDuration Results Graph](./GeneratedGraphs/DeliveryDurationResults.png)
+
+Results for Total Duration Prediction models
+![TotalDuration Results](./OutputScreenshots/TotalDuration.png)
+![TotalDuration Results Graph](./GeneratedGraphs/TotalDurationResults.png)
 
   Results for Transportation Cost Prediction models
 ![Transportation Cost Results](./OutputScreenshots/TransportationCost.png)
+![Transportation Cost Results Graph](./GeneratedGraphs/TransportationCostResults.png)
 
   The best model for each parameters turns out to be Random Forest.
+
+  From the results of the best models for each, we get the following comparisons
+![Results Comparison](./OutputScreenshots/BestModelsComparison.png)
+![Results Comparison Graph](./GeneratedGraphs/BestModelResultsComparison.png)
 
 ## How to Run
 
