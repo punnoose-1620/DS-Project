@@ -69,6 +69,20 @@ Performed various preprocessing steps to clean and prepare data:
   Identified the best-performing models for each predictor.
   Visualized and analyzed results to provide actionable insights for TKL Logistics.
 
+  Results for CO2 Prediction models
+  ![CO2 Results] (./OutputScreenshots/CO2.png)
+
+  Results for Transport Duration Prediction models
+  ![TransportDuration Results] (./OutputScreenshots/TransportDuration.png)
+
+  Results for Delivery Duration Prediction models
+  ![DeliveryDuration Results] (./OutputScreenshots/DeliveryDuration.png)
+
+  Results for Transportation Cost Prediction models
+  ![Transportation Cost Results] (./OutputScreenshots/TransportationCost.png)
+
+  The best model for each parameters turns out to be Random Forest.
+
 ## How to Run
 
   Run `data_corrector.py` to preprocess the raw JSON file.
