@@ -28,7 +28,26 @@ Workflow Summary
         **JSON Reader**: Load the JSON file.
         **JSONPath**: Convert the JSON structure into a table format.
 
-3. Data Preprocessing
+3. Data Visualization
+
+    Different Visualizations are done to understand the relation between different parameters.
+
+    Distance Based on Means of Transport
+    ![Categorized Distance](./GeneratedGraphs/CategorizedDistance.jpeg)
+
+    Total Transport Cost Based on Means of Transport
+    ![Categorized Total Transport Cost](./GeneratedGraphs/CategorizedTotalTransportCost.jpeg)
+
+    CO2 Emissions for each Means of Transport
+    ![MoT Categorized CO2 Emissions](./GeneratedGraphs/CO2EmissionForMeansOfTransport.jpeg)
+
+    CO2 Emissions based on Weight of Delivery
+    ![Weight Categorized CO2 Emissions](./GeneratedGraphs/CO2EmissionForWeight.jpeg)
+
+    Different Parameters based on Means of Transport
+    ![Param Variance based on MoT](./GeneratedGraphs/Means%20of%20Transport%20Param%20Values.png)
+
+4. Data Preprocessing
 
 Performed various preprocessing steps to clean and prepare data:
 
@@ -43,10 +62,11 @@ Performed various preprocessing steps to clean and prepare data:
   **Numeric Outliers**: Handle outliers.
   **Normalizer**: Scale data for consistent modeling.
 
-4. Model Training
+5. Model Training
 
 ## Split data into four parts for the following predictors:
 
+  - Total Duration
   - CO₂ Emissions
   - Transport Duration
   - Delivery Duration
@@ -54,6 +74,7 @@ Performed various preprocessing steps to clean and prepare data:
 
 ## Trained and evaluated three regression models for each target:
 
+  - Random Forest
   - Simple Regression Tree
   - Tree Ensemble for Regression
   - Gradient Boosted Trees for Regression
