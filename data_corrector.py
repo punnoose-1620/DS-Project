@@ -43,13 +43,6 @@ def check_invalid_key_combinations(data):
     print("Present entries with multiple invalid entry values : ")
     for item in invalid_combinations:
         print(str(item).replace('}','').replace('{',''))
-
-def drop_invalid_entries(data, key:str):
-    new_data = []
-    for entry in tqdm(data, desc=("Dropping invalid entries based on "+key)):
-        value = str(entry[key]).strip().lower()
-        if len(value)!=0 and value not in ('none','null'):
-            new_data.append(entry)
     
 def print_categories(data, key: str):
     categories = []
@@ -75,26 +68,33 @@ def write_processed_data(data):
 def drop_final_invalid_data(data):
     ref_keys = ['LoadingDate', 'UnloadingDate', 'DeliveryDate', 'Distance']
     new_data = []
+    invalid_count = 0
     for entry in tqdm(data, desc="Dropping invalid data after processing"):
+        flag = True
         for key in ref_keys:
             value = str(entry[key]).lower()
-            if len(value)>0 and (value not in ('none','null','empty','0','0.0')) and (entry not in new_data):   
-                new_data.append(entry)
+            if len(value)==0 or (value in ('none','null','empty','0','0.0')):   
+                invalid_count = invalid_count+1
+                flag = False
+        if flag==True:
+            new_data.append(entry)
     dropped_count = len(new_data)-len(data)
     print(dropped_count," entries have been dropped from data")
     return new_data
 
 data = get_raw_data()
-check_invalid_entries(data)
-check_invalid_key_combinations(data)
+# check_invalid_entries(data)
+# check_invalid_key_combinations(data)
 date_corrected = run_date_corrector(data)
 distance_corrected = run_distance_corrector(date_corrected, include_MoT=True)
 # Use this to correct distance data including MeansOfTransport as a factor
 # distance_corrected = run_distance_corrector(date_corrected, include_MoT=True) 
-check_invalid_entries(data)
-check_invalid_key_combinations(data)
-final_data = drop_final_invalid_data(data)
+# check_invalid_entries(distance_corrected)
+# check_invalid_key_combinations(distance_corrected)
+final_data = drop_final_invalid_data(distance_corrected)
 total_drop_count = (len(data)-len(final_data))
+print("Initial Data Count : ",str(len(data)))
+print("Final Data Count : ",str(len(final_data)))
 print('\n',total_drop_count,' entries dropped from data')
 # Use this line to write processed data to a new Dataset_processed.json file
 # write_processed_data(distance_corrected)

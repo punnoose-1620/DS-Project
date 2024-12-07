@@ -392,7 +392,7 @@ def drop_invalid_dates_after_correction(data):
         delivery_date_as_string = str(entry['DeliveryDate'])
         delivery_date = datetime.strptime(delivery_date_as_string, "%Y-%m-%d")
 
-        if (unloading_date>loading_date) and (delivery_date>unloading_date):
+        if (unloading_date.year>=loading_date.year) and (delivery_date.year>=unloading_date.year):
             new_data.append(entry)
     dropped_count = (len(data)-len(new_data))
     print(dropped_count," entries have been dropped from data due to date issues\n")
