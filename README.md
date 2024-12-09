@@ -25,8 +25,8 @@ Workflow Summary
 2. Loading and Conversion
 
     Loaded corrected JSON data into KNIME using:
-        **JSON Reader**: Load the JSON file.
-        **JSONPath**: Convert the JSON structure into a table format.
+        - **JSON Reader**: Load the JSON file.
+        - **JSONPath**: Convert the JSON structure into a table format.
 
 3. Data Visualization
 
@@ -51,16 +51,16 @@ Workflow Summary
 
 Performed various preprocessing steps to clean and prepare data:
 
-  **String Manipulation**: Correct formatting issues.
-  **String to Date&Time**: Parse dates into the correct format.
-  **Date&Time Difference**: Calculate durations between dates.
-  **Column Filter**: Remove unnecessary columns.
-  **String to Number**: Convert categorical data to numeric.
-  **Missing Value**: Handle missing entries.
-  **Rule Engine**: Create custom rules for data consistency.
-  **Category to Number**: Encode categorical variables.
-  **Numeric Outliers**: Handle outliers.
-  **Normalizer**: Scale data for consistent modeling.
+  - **String Manipulation**: Correct formatting issues.
+  - **String to Date&Time**: Parse dates into the correct format.
+  - **Date&Time Difference**: Calculate durations between dates.
+  - **Column Filter**: Remove unnecessary columns.
+  - **String to Number**: Convert categorical data to numeric.
+  - **Missing Value**: Handle missing entries.
+  - **Rule Engine**: Create custom rules for data consistency.
+  - **Category to Number**: Encode categorical variables.
+  - **Numeric Outliers**: Handle outliers.
+  - **Normalizer**: Scale data for consistent modeling.
 
 5. Model Training
 
