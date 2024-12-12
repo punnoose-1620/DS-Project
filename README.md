@@ -133,3 +133,10 @@ Results for Total Duration Prediction models
   Incorporate more advanced models for predictions.
   Explore hyperparameter tuning for model optimization.
   Integrate real-time data processing for better predictions.
+  Consider including regional weather data for better ETA predictions
+
+## Documents
+- Project Log:          Log history of what each person completed
+- Project Report:       Final Report of the project
+- Project Presentation: Powerpoint Presentation of project
+- Team Contract:        Contract for all team members
